@@ -1,24 +1,21 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
-import { Form, Button, Message } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import isEmail from 'validator/lib/isEmail';
-import InlineError from '../messages/InlineError';
 
 class ForgotPasswordForm extends React.Component {
   state = {
     data: {
       email: '',
     },
-    loading: false,
     errors: {},
   };
 
   onChange = e =>
     this.setState({
-      data: {
-        ...this.state.data,
-        [e.target.name]: e.target.value,
-      },
+      ...this.state,
+      data: { ...this.state.data, [e.target.name]: e.target.value },
     });
 
   onSubmit = e => {
@@ -27,12 +24,11 @@ class ForgotPasswordForm extends React.Component {
     this.setState({ errors });
     if (Object.keys(errors).length === 0) {
       this.setState({ loading: true });
-      this.props.submit(this.state.data).catch(err =>
-        this.setState({
-          errors: err.response.data.errors,
-          loading: false,
-        })
-      );
+      this.props
+        .submit(this.state.data)
+        .catch(err =>
+          this.setState({ errors: err.response.data.errors, loading: false })
+        );
     }
   };
 
@@ -43,25 +39,38 @@ class ForgotPasswordForm extends React.Component {
   };
 
   render() {
-    const { errors, data, loading } = this.state;
+    const { errors, data } = this.state;
 
     return (
-      <Form onSubmit={this.onSubmit} loading={loading}>
-        {!!errors.global && <Message negative>{errors.global}</Message>}
-        <Form.Field error={!!errors.email}>
+      <form onSubmit={this.onSubmit}>
+        {!!errors.global && (
+          <div className="alert alert-danger">{errors.global}</div>
+        )}
+
+        <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
             name="email"
-            placeholder="email"
             value={data.email}
             onChange={this.onChange}
+            className={
+              errors.email ? 'form-control is-invalid' : 'form-control'
+            }
           />
-          {errors.email && <InlineError text={errors.email} />}
-        </Form.Field>
-        <Button primary>ForgotPasswordForm</Button>
-      </Form>
+          <div className="invalid-feedback">{errors.email}</div>
+        </div>
+
+        <button type="submit" className="btn btn-primary btn-block">
+          Send Recover Password Link
+        </button>
+
+        <small className="form-text text-center">
+          <Link to="/signup">Sign Up</Link> |
+          <Link to="/login">Login</Link>
+        </small>
+      </form>
     );
   }
 }

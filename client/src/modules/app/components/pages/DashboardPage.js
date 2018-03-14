@@ -9,7 +9,12 @@ class DashboardPage extends Component {
 
   render() {
     const { isConfirmed } = this.props;
-    return <div>{!isConfirmed && <ConfirmEmailMessage />}</div>;
+
+    return (
+      <div className="container-fluid">
+        {!isConfirmed && <ConfirmEmailMessage />}
+      </div>
+    );
   }
 }
 
