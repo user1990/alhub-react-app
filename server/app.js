@@ -11,18 +11,11 @@ const app = express();
 
 // MongoDb connection
 mongoose.Promise = Promise;
-if (process.env.NODE_ENV === 'test') {
-  mongoose.connect(keys.MONGO_DB_URI_TEST);
-} else {
-  mongoose.connect(keys.MONGO_DB_URI);
-}
-// Middlewares
-if (!process.env.NODE_ENV === 'test') {
-  app.use(logger('dev'));
-}
+mongoose.connect(keys.MONGODB_URI);
 
+// Middlewares
+app.use(logger('dev'));
 app.use(cors({ credentials: true }));
-app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 

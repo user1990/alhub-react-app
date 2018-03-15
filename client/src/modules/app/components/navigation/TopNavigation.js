@@ -15,8 +15,9 @@ import {
   DropdownItem,
 } from 'reactstrap';
 import { NavLink as RouterNavLink } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import gravatarUrl from 'gravatar-url';
-import { logout } from '../../reducers';
+import { logout, setLocale } from '../../reducers';
 
 class TopNavigation extends Component {
   state = {
@@ -34,15 +35,19 @@ class TopNavigation extends Component {
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav navbar>
-            <NavLink
-              tag={RouterNavLink}
-              activeClassName="active"
-              to="/dashboard"
-            >
-              Dashboard
-            </NavLink>
+            <NavItem>
+              <NavLink
+                tag={RouterNavLink}
+                activeClassName="active"
+                to="/dashboard"
+              >
+                <FormattedMessage id="nav.dashboard" />
+              </NavLink>
+            </NavItem>
           </Nav>
           <Nav className="ml-auto" navbar>
+            <button onClick={() => this.props.setLocale('en')}>EN</button> |
+            <button onClick={() => this.props.setLocale('lt')}>LT</button>
             <UncontrolledDropdown nav>
               <DropdownToggle nav>
                 <img
@@ -52,9 +57,13 @@ class TopNavigation extends Component {
                 />
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>My Account</DropdownItem>
+                <DropdownItem>
+                  <FormattedMessage id="nav.account" />
+                </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem onClick={() => logout()}>Logout</DropdownItem>
+                <DropdownItem onClick={() => logout()}>
+                  <FormattedMessage id="nav.logout" />
+                </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
@@ -69,12 +78,13 @@ TopNavigation.propTypes = {
     email: PropTypes.string.isRequired,
   }).isRequired,
   logout: PropTypes.func.isRequired,
+  setLocale: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { logout }, null, {
+export default connect(mapStateToProps, { logout, setLocale }, null, {
   pure: false,
 })(TopNavigation);

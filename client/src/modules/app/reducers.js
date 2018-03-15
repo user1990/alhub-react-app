@@ -1,10 +1,11 @@
 /* eslint-disable spaced-comment */
-import { normalize } from 'normalizr';
 import api from '../../services/api';
 import setAuthorizationHeader from '../../utils/setAuthorizationHeader';
 
 ///// CONSTANTS /////
 export const actionTypes = {
+  LOCALE_SET: 'LOCALE_SET',
+
   USER_LOGGED_IN: 'USER/LOGGED_IN',
   USER_LOGGED_OUT: 'USER/LOGGED_OUT',
 
@@ -20,7 +21,7 @@ export const actionTypes = {
 // Auth
 export const userLoggedIn = user => ({
   type: actionTypes.USER_LOGGED_IN,
-  payload: user,
+  user,
 });
 
 export const userLoggedOut = () => ({
@@ -66,13 +67,29 @@ export const fetchCurrentUserRequest = () => ({
 
 export const fetchCurrentUserSuccess = user => ({
   type: actionTypes.FETCH_CURRENT_USER_SUCCESS,
-  payload: user,
+  user,
+});
+
+export const createUserRequest = user => ({
+  type: actionTypes.CREATE_USER_REQUEST,
+  user,
 });
 
 export const createUserFailure = errors => ({
   type: actionTypes.CREATE_USER_FAILURE,
-  payload: errors,
+  errors,
 });
+
+// Locale
+export const localeSet = locale => ({
+  type: actionTypes.LOCALE_SET,
+  payload: locale,
+});
+
+export const setLocale = locale => dispatch => {
+  localStorage.alhubLocale = locale;
+  dispatch(localeSet(locale));
+};
 
 ///// REDUCERS /////
 
@@ -81,14 +98,14 @@ export const userReducer = (user = { loaded: false }, action) => {
   switch (action.type) {
     case actionTypes.USER_LOGGED_IN:
       return {
-        ...action.payload,
+        ...action.user,
         loaded: true,
       };
 
     case actionTypes.FETCH_CURRENT_USER_SUCCESS:
       return {
         ...user,
-        ...action.payload,
+        ...action.user,
         loaded: true,
       };
 
@@ -97,5 +114,16 @@ export const userReducer = (user = { loaded: false }, action) => {
 
     default:
       return user;
+  }
+};
+
+// Locale
+export const localeReducer = (locale = 'en', action) => {
+  switch (action.type) {
+    case actionTypes.LOCALE_SET:
+      return action.payload;
+
+    default:
+      return locale;
   }
 };

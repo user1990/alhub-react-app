@@ -1,8 +1,10 @@
 import React from 'react';
 
+import { FormattedMessage } from 'react-intl';
+
 const ConfirmEmailMessage = () => (
   <div className="alert alert-warning">
-    Please, verify your email to unlock awesomeness
+    <FormattedMessage id="messages.confirmEmail" />
   </div>
 );
 

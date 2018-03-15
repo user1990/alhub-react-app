@@ -87,6 +87,7 @@ App.propTypes = {
 const mapStateToProps = state => ({
   isAuthenticated: !!state.user.email,
   loaded: state.user.loaded,
+  locale: state.locale,
 });
 
 const AppContainer = connect(mapStateToProps, { fetchCurrentUserRequest })(App);

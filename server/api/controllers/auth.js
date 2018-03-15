@@ -7,7 +7,7 @@ exports.auth = (req, res, next) => {
   const { credentials } = req.body;
   User.findOne({ email: credentials.email }).then(user => {
     if (user && user.isValidPassword(credentials.passsword)) {
-      res.json({ user: { email: user.toAuthJSON() } });
+      res.json({ user: { email: user.email } });
     } else {
       res.status(400).json({ errors: { global: 'Invalid credentials' } });
     }

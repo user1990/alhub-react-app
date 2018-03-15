@@ -40,19 +40,19 @@ userSchema.methods.isValidPassword = function isValidPassword(password) {
 };
 
 userSchema.methods.setPassword = function setPassword(password) {
-  this.passwordHash = bcrypt.compareSync(password, 10);
+  this.passwordHash = bcrypt.hashSync(password, 10);
 };
 
-userSchema.methods.setComfirmationToken = function setComfirmationToken() {
+userSchema.methods.setConfirmationToken = function setConfirmationToken() {
   this.confirmationToken = this.generateJWT();
 };
 
-userSchema.methods.generateConfirmUrl = function generateConfirmUrl() {
+userSchema.methods.generateConfirmationUrl = function generateConfirmationUrl() {
   return `${keys.HOST}/confirmation/${this.confirmationToken}`;
 };
 
 userSchema.methods.generateResetPasswordLink = function generateResetPasswordLink() {
-  return `${keys.HOST}/reset_password/${this.generateResetPasswordToken}`;
+  return `${keys.HOST}/reset_password/${this.generateResetPasswordToken()}`;
 };
 
 userSchema.methods.generateJWT = function generateJWT() {
@@ -72,21 +72,21 @@ userSchema.methods.generateResetPasswordToken = function generateResetPasswordTo
       _id: this._id,
     },
     keys.JWT_SECRET,
-    { expiresIn: '1s' }
+    { expiresIn: '1h' }
   );
 };
 
 userSchema.methods.toAuthJSON = function toAuthJSON() {
   return {
     email: this.email,
-    username: this.username,
     confirmed: this.confirmed,
+    username: this.username,
     token: this.generateJWT(),
   };
 };
 
 userSchema.plugin(uniqueValidator, {
-  message: 'This email is already taken, try another one.',
+  message: 'It is already taken, try another one.',
 });
 
-module.exports = mongoose.model('User', userSchema);
+export default mongoose.model('User', userSchema);
