@@ -4,14 +4,11 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
-
-import configureStore from './modules/app/configureStore';
+import store from './modules/app/store';
 import App from './modules/app/App';
 import registerServiceWorker from './registerServiceWorker';
 
 require('react-hot-loader/patch');
-
-const store = configureStore();
 
 function render(App) {
   ReactDOM.render(

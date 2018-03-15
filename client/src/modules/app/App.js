@@ -6,7 +6,7 @@ import Loader from 'react-loader';
 import { connect } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../../styles/app.css';
-import { fetchCurrentUser } from './reducers';
+import { fetchCurrentUserRequest } from './reducers';
 // Componets
 import HomePage from './components/pages/HomePage';
 import LoginPage from './components/pages/LoginPage';
@@ -21,11 +21,9 @@ import UserRoute from './components/routes/UserRoute';
 import GuestRoute from './components/routes/GuestRoute';
 
 class App extends Component {
-  componentDidMount = () => {
-    if (this.props.isAuthenticated) {
-      this.props.fetchCurrentUser();
-    }
-  };
+  componentDidMount() {
+    if (this.props.isAuthenticated) this.props.fetchCurrentUserRequest();
+  }
 
   render() {
     const { location, isAuthenticated, loaded } = this.props;
@@ -82,7 +80,7 @@ App.propTypes = {
     pathname: PropTypes.string.isRequired,
   }).isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  fetchCurrentUser: PropTypes.bool.isRequired,
+  fetchCurrentUserRequest: PropTypes.func.isRequired,
   loaded: PropTypes.bool.isRequired,
 };
 
@@ -91,6 +89,6 @@ const mapStateToProps = state => ({
   loaded: state.user.loaded,
 });
 
-const AppContainer = connect(mapStateToProps, { fetchCurrentUser })(App);
+const AppContainer = connect(mapStateToProps, { fetchCurrentUserRequest })(App);
 
 export default AppContainer;

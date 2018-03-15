@@ -89,4 +89,4 @@ userSchema.plugin(uniqueValidator, {
   message: 'This email is already taken, try another one.',
 });
 
-export default mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema);

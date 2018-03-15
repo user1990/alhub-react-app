@@ -8,7 +8,11 @@ export const actionTypes = {
   USER_LOGGED_IN: 'USER/LOGGED_IN',
   USER_LOGGED_OUT: 'USER/LOGGED_OUT',
 
-  USER_FETCHED: 'USER/USER_FETCHED',
+  CREATE_USER_REQUEST: 'CREATE/USER_REQUEST',
+  CREATE_USER_FAILURE: 'CREATE/USER_FAILURE',
+
+  FETCH_CURRENT_USER_REQUEST: 'FETCH/CURRENT_USER_REQUEST',
+  FETCH_CURRENT_USER_SUCCESS: 'FETCH/CURRENT_USER_SUCCESS',
 };
 
 ///// ACTIONS /////
@@ -27,7 +31,7 @@ export const login = credentials => dispatch =>
   api.user.login(credentials).then(user => {
     localStorage.bookwormJWT = user.token;
     setAuthorizationHeader(user.token);
-    dispatch(userLoggedIn(user));
+    dispatch(userLoggedIn({ ...user, loaded: true }));
   });
 
 export const logout = () => dispatch => {
@@ -56,13 +60,19 @@ export const signup = data => dispatch =>
     dispatch(userLoggedIn(user));
   });
 
-export const userFetched = user => ({
-  type: actionTypes.USER_FETCHED,
+export const fetchCurrentUserRequest = () => ({
+  type: actionTypes.FETCH_CURRENT_USER_REQUEST,
+});
+
+export const fetchCurrentUserSuccess = user => ({
+  type: actionTypes.FETCH_CURRENT_USER_SUCCESS,
   payload: user,
 });
 
-export const fetchCurrentUser = () => dispatch =>
-  api.user.fetchCurrentUser().then(user => dispatch(userFetched(user)));
+export const createUserFailure = errors => ({
+  type: actionTypes.CREATE_USER_FAILURE,
+  payload: errors,
+});
 
 ///// REDUCERS /////
 
@@ -70,9 +80,12 @@ export const fetchCurrentUser = () => dispatch =>
 export const userReducer = (user = { loaded: false }, action) => {
   switch (action.type) {
     case actionTypes.USER_LOGGED_IN:
-      return action.payload;
+      return {
+        ...action.payload,
+        loaded: true,
+      };
 
-    case actionTypes.USER_FETCHED:
+    case actionTypes.FETCH_CURRENT_USER_SUCCESS:
       return {
         ...user,
         ...action.payload,

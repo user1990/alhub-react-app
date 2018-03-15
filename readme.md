@@ -18,6 +18,8 @@
 * HMR (Hot-Module-Replacement)
 * Internationalisation with React-Intl
 
+### Setup
+
 ```bash
 $ git clone https://github.com/user1990/alhub-react-app.git
 ```
@@ -28,7 +30,6 @@ then checkout the branch as follow
 $ git checkout 'branch_name'
 ```
 
-This project uses async/await it would be best if you use **node 8+**
 after checkout be sure to run
 
 ```bash
@@ -39,6 +40,19 @@ installing using yarn
 
 ```bash
 $ yarn install
+```
+
+Add dev.js file in server/api/config directory, example:
+
+```bash
+module.exports = {
+  MONGO_DB_URI: 'YOUR_MONGODB_URI',
+  JWT_SECRET: 'YOUR_RANDOM_JWT_SECRET',
+  EMAIL_HOST: 'YOUR_MAILTRAP_HOST',
+  EMAIL_PORT: 2525,
+  EMAIL_USER: 'YOUR_MAILTRAP_USER',
+  EMAIL_PASS: 'YOUR_MAILTRAP_PASSWORD',
+};
 ```
 
 To run the project use

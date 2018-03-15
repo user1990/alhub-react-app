@@ -77,6 +77,4 @@ router.post('/reset_password', (req, res) => {
   });
 });
 
-export default router;
-
 module.exports = router;
