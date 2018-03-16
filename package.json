@@ -8,15 +8,7 @@
       "cross-env NODE_ENV=prod nodemon --exec babel-node -- server/server.js",
     "client-dev": "npm start --prefix client",
     "start-dev": "concurrently \"npm run server-dev\" \"npm run client-dev\"",
-    "seed": "babel-node server/seed/seed.js",
-    "test":
-      "cross-env NODE_ENV=test mocha --timeout 5000 __tests__/server/**/*.test.js",
-    "report":
-      "cross-env NODE_ENV=test nyc --reporter=lcov mocha --timeout 5000 __tests__/server/**/*.test.js",
-    "text-report":
-      "cross-env NODE_ENV=test nyc --reporter=text-summary mocha --timeout 5000 __tests__/server/**/*.test.js",
-    "nyc":
-      "cross-env NODE_ENV=test nyc mocha --timeout 5000 __tests__/server/**/*.test.js"
+    "seed": "babel-node server/seed/seed.js"
   },
   "author": "user1990",
   "license": "ISC",
