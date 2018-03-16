@@ -44,6 +44,15 @@ class TopNavigation extends Component {
                 <FormattedMessage id="nav.dashboard" />
               </NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink
+                tag={RouterNavLink}
+                activeClassName="active"
+                to="/characters"
+              >
+                <FormattedMessage id="nav.characters" />
+              </NavLink>
+            </NavItem>
           </Nav>
           <Nav className="ml-auto" navbar>
             <button onClick={() => this.props.setLocale('en')}>EN</button> |
