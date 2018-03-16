@@ -1,5 +1,7 @@
 # Adventurers League Hub React Application
 
+App development in progress...
+
 ### Server Side
 
 * Node/Express API Setup
