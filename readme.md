@@ -46,7 +46,7 @@ Add dev.js file in server/api/config directory, example:
 
 ```bash
 module.exports = {
-  MONGO_DB_URI: 'YOUR_MONGODB_URI',
+  MONGO_DB_URI: 'YOUR_MONGODB_URL',
   JWT_SECRET: 'YOUR_RANDOM_JWT_SECRET',
   EMAIL_HOST: 'YOUR_MAILTRAP_HOST',
   EMAIL_PORT: 2525,

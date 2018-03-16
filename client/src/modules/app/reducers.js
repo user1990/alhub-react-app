@@ -1,4 +1,5 @@
 /* eslint-disable spaced-comment */
+import { createSelector } from 'reselect';
 import api from '../../services/api';
 import setAuthorizationHeader from '../../utils/setAuthorizationHeader';
 
@@ -117,6 +118,14 @@ export const userReducer = (user = { loaded: false }, action) => {
   }
 };
 
+// Characters
+export const charactersReducer = (characters = {}, action = {}) => {
+  switch (action.type) {
+    default:
+      return characters;
+  }
+};
+
 // Locale
 export const localeReducer = (locale = 'en', action) => {
   switch (action.type) {
@@ -127,3 +136,10 @@ export const localeReducer = (locale = 'en', action) => {
       return locale;
   }
 };
+
+///// SELECTORS /////
+export const charactersHashSelector = state => state.characters;
+
+export const charactersSelector = createSelector(charactersHashSelector, hash =>
+  Object.values(hash)
+);

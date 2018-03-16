@@ -11,7 +11,7 @@ const app = express();
 
 // MongoDb connection
 mongoose.Promise = Promise;
-mongoose.connect(keys.MONGODB_URI);
+mongoose.connect(keys.MONGODB_URL);
 
 // Middlewares
 app.use(logger('dev'));
